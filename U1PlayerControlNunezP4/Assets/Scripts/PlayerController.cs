@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 20.0f;
-    private float turnSpeed = 45.0f;
+    private float speed = 35.0f;
+    private float turnSpeed = 80.0f;
     private float horizontalInput;
     private float forwardInput;
+
+    public Camera mainCamera;
+    public Camera hoodCamera;
+    public KeyCode switchKey;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +30,15 @@ public class PlayerController : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
         // Moves the car forwards based on vertical input
         transform.Translate(Vector3.forward * Time.deltaTime * speed * forwardInput);
-        // Rotates the car based om horizontal input
+        // Rotates the car based on horizontal input
         transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+        
+        if (Input.GetKeyDown(switchKey))
+        {
+            mainCamera.enabled = !mainCamera.enabled;
+            hoodCamera.enabled = !hoodCamera.enabled;
+        }
     }
+    
+
 }
